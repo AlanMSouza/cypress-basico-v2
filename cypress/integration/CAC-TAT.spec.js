@@ -15,21 +15,34 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         cy.get('#firstName').type('Alan')
         cy.get('#lastName').type('Moreira de Souza')
         cy.get('#email').type('alan@gmail.com')
-        cy.get('#open-text-area').type(longText, {delay: 0})
+        cy.get('#open-text-area').type(longText, {delay: 0}) ///exercicio extra 1
         cy.get('#phone-checkbox').click
         cy.get('#phone').type('1234')
         cy.get('button[type="submit"]').click()
         cy.get('.success > strong').should('be.visible')
     })
 
+    ///exercicio extra 2
     it("exibe mensagem de erro ao submeter o formulário com um email com formatação inválida", function(){
         cy.get('#email').type('alan@gmailcom')
         cy.get('button[type="submit"]').click()
         cy.get('span[class="error"').should('be.visible')
     })
-    it.only("validar campo telefone com valores nao numericos", function(){
-        cy.get('#phone').type('abcd')
-        cy.get('#phone').should('have.text', '')
+
+    ///exercicio extra 3
+    it("validar campo telefone com valores nao numericos", function(){
+        cy.get('#phone').type('abcd').should('have.text', '')
+    })
+
+    ///exercicio extra 4
+    it.only("exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário", function(){
+        cy.get('#firstName').type('Alan')
+        cy.get('#lastName').type('Moreira de Souza')
+        cy.get('#email').type('alan@gmail.com')
+        cy.get('#open-text-area').type("teste")
+        cy.get('#phone-checkbox').click()
+        cy.get('button[type="submit"]').click()
+        cy.get('.error').should('be.visible')
     })
   })
    
